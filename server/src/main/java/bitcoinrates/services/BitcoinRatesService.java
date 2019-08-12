@@ -1,26 +1,33 @@
 package bitcoinrates.services;
 
-import bitcoinrates.entities.BitcoinRatesSnapshot;
-import bitcoinrates.repositories.BitcoinRatesSnapshotRepository;
+import bitcoinrates.entities.BitcoinRate;
+import bitcoinrates.repositories.BitcoinRateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class BitcoinRatesService {
 
-    private final BitcoinRatesSnapshotRepository bitcoinRatesSnapshotRepository;
+    private final BitcoinRateRepository bitcoinRateRepository;
 
     @Autowired
-    public BitcoinRatesService(BitcoinRatesSnapshotRepository bitcoinRatesSnapshotRepository) {
-        this.bitcoinRatesSnapshotRepository = bitcoinRatesSnapshotRepository;
+    public BitcoinRatesService(BitcoinRateRepository bitcoinRateRepository) {
+        this.bitcoinRateRepository = bitcoinRateRepository;
     }
 
-    public void save(BitcoinRatesSnapshot bitcoinRatesSnapshot) {
-        if (bitcoinRatesSnapshotRepository.findByTimestamp(bitcoinRatesSnapshot.getTimestamp()).isEmpty()) {
-            bitcoinRatesSnapshot.getBitcoinRates()
-                    .stream()
-                    .forEach(bitcoinRate -> bitcoinRate.setBitcoinRatesSnapshot(bitcoinRatesSnapshot));
-            bitcoinRatesSnapshotRepository.save(bitcoinRatesSnapshot);
+    @Transactional
+    public void save(Date timestamp, List<BitcoinRate> rates) {
+        if (bitcoinRateRepository.findByTimestamp(timestamp).isEmpty()) {
+            rates.stream().forEach(rate -> bitcoinRateRepository.save(rate));
         }
+    }
+
+    public List<BitcoinRate> getBitcoinRates(String code, Date from, Date to) {
+        return bitcoinRateRepository
+                .findByCodeAndTimestampBetween(code, from, to);
     }
 }
