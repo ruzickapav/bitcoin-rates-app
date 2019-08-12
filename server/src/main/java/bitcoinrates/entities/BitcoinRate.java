@@ -1,22 +1,67 @@
 package bitcoinrates.entities;
 
-import lombok.Data;
+import javax.persistence.*;
+import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
-@Data
 @Entity
-public class BitcoinRate {
+public class BitcoinRate implements Serializable {
     @Id
     String code;
+
     String symbol;
     String description;
-    Double rate;
-    String rateText;
+    Double rate_float;
+    String rate;
 
     @Id
-    @ManyToOne
+    @ManyToOne()
     BitcoinRatesSnapshot bitcoinRatesSnapshot;
+
+    public Double getRate_float() {
+        return rate_float;
+    }
+
+    public void setRate_float(Double rate_float) {
+        this.rate_float = rate_float;
+    }
+
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BitcoinRatesSnapshot getBitcoinRatesSnapshot() {
+        return bitcoinRatesSnapshot;
+    }
+
+    public void setBitcoinRatesSnapshot(BitcoinRatesSnapshot bitcoinRatesSnapshot) {
+        this.bitcoinRatesSnapshot = bitcoinRatesSnapshot;
+    }
 }

@@ -6,10 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BitcoinRatesSnapshotRepository extends CrudRepository<BitcoinRatesSnapshot, Long> {
-
-    List<BitcoinRatesSnapshot> findBySerialAndTimestampBetweenOrderByTimestamp(String serial, Date from, Date to);
+    Optional<BitcoinRatesSnapshot> findByTimestamp(Date timestamp);
 
 }
