@@ -2,12 +2,15 @@ import Plot from "react-plotly.js";
 import React from "react";
 
 const bitcoinRatesChart = props => {
+    let timeValues = props.data.map(tick => tick.timestamp);
+    let ratesValues= props.data.map(tick => tick.rate_float);
+
     return (
         <Plot data={
             [
                 {
-                    x: [1, 2, 3],
-                    y: [2, 6, 3],
+                    x: timeValues,
+                    y: ratesValues,
                     type: 'scatter',
                     mode: 'lines+points',
                     marker: {color: 'red'},
@@ -15,9 +18,8 @@ const bitcoinRatesChart = props => {
             ]}
               layout={
                   {
-                      width: 320, height:
-                          240, title:
-                          'A Fancy Plot'
+                      width: 800, height: 600,
+                      title: 'Bitcoin/' + props.currency_code +' rate'
                   }
               }
         />

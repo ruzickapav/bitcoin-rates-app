@@ -5,10 +5,7 @@ import bitcoinrates.entities.BitcoinRate;
 import bitcoinrates.services.BitcoinRatesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -26,6 +23,7 @@ public class BitcoinRatesController {
         return Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
     }
 
+    @CrossOrigin
     @GetMapping("/rates/{code}/")
     public List<BitcoinRateTickDTO> getRateHistory(@PathVariable(value = "code") String code,
                                                    @RequestParam("fromDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fromDate,
