@@ -1,15 +1,17 @@
 package bitcoinrates.entities;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @IdClass(BitcoinRateId.class)
 @Entity
 public class BitcoinRate implements Serializable {
 
     @Id
-    Date timestamp;
+    LocalDateTime timestamp;
 
     @Id
     String code;
@@ -19,11 +21,11 @@ public class BitcoinRate implements Serializable {
     Double rate_float;
     String rate;
 
-    public Date getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 

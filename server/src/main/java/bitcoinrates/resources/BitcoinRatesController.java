@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -19,9 +20,6 @@ public class BitcoinRatesController {
     @Autowired
     private BitcoinRatesService bitcoinRatesService;
 
-    private Date toDate(LocalDateTime ldt) {
-        return Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
-    }
 
     @CrossOrigin
     @GetMapping("/rates/{code}/")
@@ -30,7 +28,7 @@ public class BitcoinRatesController {
                                                    @RequestParam("toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime toDate) {
 
         List<BitcoinRate> bitcoinRates = bitcoinRatesService
-                .getBitcoinRates(code, toDate(fromDate), toDate(toDate));
+                .getBitcoinRates(code, fromDate, toDate);
         return bitcoinRates.stream()
                 .map(rate -> new BitcoinRateTickDTO(rate.getTimestamp(), rate.getRate_float()))
                 .collect(Collectors.toList());

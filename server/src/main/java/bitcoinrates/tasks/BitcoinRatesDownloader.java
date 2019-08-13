@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,14 +47,20 @@ public class BitcoinRatesDownloader {
                 .map(entry -> modelMapper.map(entry.getValue(), BitcoinRate.class))
                 .collect(Collectors.toList());
 
-        Date timestamp = bitcoinRatesSnapshotDTO.getTime().getUpdatedISO();
+        LocalDateTime timestamp = convertToLocalDateTimeViaInstant(bitcoinRatesSnapshotDTO.getTime().getUpdatedISO());
         rates.stream().forEach(rate -> rate.setTimestamp(timestamp));
 
         return rates;
     }
 
+    public LocalDateTime convertToLocalDateTimeViaInstant(Date dateToConvert) {
+        return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+    }
+
     @Scheduled(fixedRate = 12000)
-    void getCurrentBitcoinRates() {
+   public void getCurrentBitcoinRates() {
 
         var response =
                 restTemplate.exchange(CURRENT_PRICE_URI, HttpMethod.GET, null, BitcoinRatesSnapshotDTO.class);
@@ -60,7 +68,7 @@ public class BitcoinRatesDownloader {
         if (response.getStatusCode() == HttpStatus.OK) {
             var bitcoinRatesSnapshotDTO = response.getBody();
             var bitcoinRates = translate(bitcoinRatesSnapshotDTO);
-            var timestamp = bitcoinRatesSnapshotDTO.getTime().getUpdatedISO();
+            var timestamp = convertToLocalDateTimeViaInstant(bitcoinRatesSnapshotDTO.getTime().getUpdatedISO());
 
             bitcoinRatesService.save(timestamp, bitcoinRates);
         }

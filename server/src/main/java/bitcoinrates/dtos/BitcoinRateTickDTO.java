@@ -2,27 +2,27 @@ package bitcoinrates.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BitcoinRateTickDTO {
-    Date timestamp;
+    LocalDateTime timestamp;
     Double rate_float;
 
     public BitcoinRateTickDTO() {
     }
 
-    public BitcoinRateTickDTO(Date timestamp, Double rate_float) {
+    public BitcoinRateTickDTO(LocalDateTime timestamp, Double rate_float) {
         this.timestamp = timestamp;
         this.rate_float = rate_float;
     }
 
-    public Date getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 

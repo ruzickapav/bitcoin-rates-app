@@ -1,14 +1,15 @@
 package bitcoinrates.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
+
 import java.util.Objects;
 
 public class BitcoinRateId implements Serializable {
-    Date timestamp;
+    LocalDateTime timestamp;
     String code;
 
-    public BitcoinRateId(Date timestamp, String code) {
+    public BitcoinRateId(LocalDateTime timestamp, String code) {
         this.timestamp = timestamp;
         this.code = code;
     }
@@ -16,11 +17,11 @@ public class BitcoinRateId implements Serializable {
     public BitcoinRateId() {
     }
 
-    public Date getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 
