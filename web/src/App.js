@@ -11,10 +11,9 @@ class App extends Component {
     };
 
     componentDidMount() {
-        const format = "YYYY-MM-DDTHH:MM:ss";
+        const format = "YYYY-MM-DDTHH:mm:ssZ";
         let dateTo = new moment().format(format);
         let dateFrom = new moment().subtract(1, 'day').format(format);
-        debugger;
         axios.get('http://localhost:8080/rates/USD/', {
             params: {fromDate: dateFrom, toDate: dateTo}
         }).then(response => this.setState({rateHistory: response.data}))
