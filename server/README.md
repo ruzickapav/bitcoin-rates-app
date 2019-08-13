@@ -1,5 +1,5 @@
-# SkyNet Webapp
-Gateway to SkyNet Transaction Platform
+# BitcoinRate Provider
+Server providing historical Bitcoin rates
 
 ## Prerequisites
 Java 11,
@@ -13,3 +13,5 @@ Gradle
 ```
 ./gradlew bootrun
 ```
+## Swagger
+http://localhost:8080/swagger-ui.html
