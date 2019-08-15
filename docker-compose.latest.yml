@@ -2,7 +2,7 @@ version: '3'
 
 services:
   server:
-    image: pruzicka/bitcoin-rates-app-web:v1
+    image: pruzicka/bitcoin_rates_server:v1.0
     command: ./gradlew bootrun
     restart: always
     environment:
@@ -13,6 +13,6 @@ services:
       - "8080:8080"
 
   web:
-    image: pruzicka/bitcoin_rates_server:v1.0
+    image: pruzicka/bitcoin-rates-app-web:v1
     ports:
       - "80:80"
