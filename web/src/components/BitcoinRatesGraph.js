@@ -5,8 +5,7 @@ import moment from 'moment'
 const bitcoinRatesChart = props => {
     let timeValues = props.data.map(tick => { return moment(tick.timestamp).local().format(""); });
     let ratesValues= props.data.map(tick => tick.rate_float);
-
-    console.log(timeValues);
+    
     return (
         <Plot data={
             [
