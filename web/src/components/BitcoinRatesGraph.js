@@ -3,7 +3,7 @@ import React from "react";
 import moment from 'moment'
 
 const bitcoinRatesChart = props => {
-    let timeValues = props.data.map(tick => { return moment(tick.timestamp).local().format(""); });
+    let timeValues = props.data.map(tick => { return moment(moment.utc(tick.timestamp).toDate()).local().format(""); });
     let ratesValues= props.data.map(tick => tick.rate_float);
     
     return (
